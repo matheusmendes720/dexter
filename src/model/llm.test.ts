@@ -20,3 +20,25 @@ describe('OpenAI API routing', () => {
     }
   });
 });
+
+describe('MiniMax API routing', () => {
+  test('routes MiniMax-prefixed models to the MiniMax base URL', () => {
+    const previousApiKey = process.env.MINIMAX_API_KEY;
+    process.env.MINIMAX_API_KEY = 'test-key';
+
+    try {
+      const llm = getChatModel('MiniMax-M2.7-highspeed') as {
+        model?: string;
+        clientConfig?: { baseURL?: string };
+      };
+      expect(llm.model).toBe('MiniMax-M2.7-highspeed');
+      expect(llm.clientConfig?.baseURL).toBe('https://api.MiniMax.io/v1');
+    } finally {
+      if (previousApiKey === undefined) {
+        delete process.env.MINIMAX_API_KEY;
+      } else {
+        process.env.MINIMAX_API_KEY = previousApiKey;
+      }
+    }
+  });
+});

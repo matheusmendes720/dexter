@@ -45,10 +45,11 @@
 
 ## LLM Providers
 
-- Supported: OpenAI (default), Anthropic, Google, xAI (Grok), OpenRouter, Ollama (local).
-- Default model: `gpt-5.5`. Provider detection is prefix-based (`claude-` -> Anthropic, `gemini-` -> Google, etc.).
+- Supported: OpenAI (default), Anthropic, Google, xAI (Grok), OpenRouter, Ollama (local), MiniMax.
+- Default model: `MiniMax-M2.7-highspeed`. Provider detection is prefix-based (`claude-` -> Anthropic, `gemini-` -> Google, `MiniMax-` -> MiniMax, etc.).
 - Fast models for lightweight tasks: see `FAST_MODELS` map in `src/model/llm.ts`.
 - Anthropic uses explicit `cache_control` on system prompt for prompt caching cost savings.
+- MiniMax uses an OpenAI-compatible endpoint at `https://api.MiniMax.io/v1` (see `src/model/llm.ts` factory).
 - Users switch providers/models via `/model` command in the CLI.
 
 ## Tools

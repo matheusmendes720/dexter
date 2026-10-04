@@ -16,7 +16,7 @@ import { classifyError, isNonRetryableError } from '@/utils/errors';
 import { resolveProvider, getProviderById } from '@/providers';
 
 export const DEFAULT_PROVIDER = 'openai';
-export const DEFAULT_MODEL = 'gpt-6-astra';
+export const DEFAULT_MODEL = 'MiniMax-M2.7-highspeed';
 
 /**
  * Gets the fast model variant for the given provider.
@@ -127,6 +127,15 @@ const MODEL_FACTORIES: Record<string, ModelFactory> = {
       }),
     });
   },
+  minimax: (name, opts) =>
+    new ChatOpenAI({
+      model: name,
+      ...opts,
+      apiKey: getApiKey('MINIMAX_API_KEY'),
+      configuration: {
+        baseURL: 'https://api.MiniMax.io/v1',
+      },
+    }),
   ollama: (name, opts) =>
     new ChatOllama({
       model: name.replace(/^ollama:/, ''),
